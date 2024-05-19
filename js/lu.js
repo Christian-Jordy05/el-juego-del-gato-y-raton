@@ -18,14 +18,14 @@ let matriz = [
     ["", "", ""]
 ]
 
-
+console.log(matriz[1][1]);
 /**/ 
 let gato = true; /*el gato es el que me ayuda quien empieza*/
 
 turno1 = true; 
 /*turno me ayuda que funcione la funcion*/
 function cuadro1() {
-    mensaje.innerText = "turno de AI"  /*este es el mensaje que se enseña en la pantalla demostrando quien va hacer el siguente*/
+      /*este es el mensaje que se enseña en la pantalla demostrando quien va hacer el siguente*/
     if (turno1 === true) { /*turno es el que me va a validar para que la operacion compienze*/
         if (gato === true) { /*y aqui se hace una comparacion que si gato es TRUE es X*/
             cuad1.innerHTML = 'X' /*y si se cumple con el requesito anterior la X se va amostrar en el cuadro1*/
@@ -36,6 +36,8 @@ function cuadro1() {
         } else {
             cuad1.innerHTML = 'O' /*esto es para si el usurio no selecciono en el cuadro1 que la Ai ponga un O*/
             gato = true;
+            mensaje.innerText = "Tu turno"
+
             matriz[0][0] = "O" /*y aqui si la X selecciona este campo entonces se guarda en la matriz para que sepa que ya selecciono este cuadro y no intente repetir en el mismo cuadro*/
             console.log(matriz);
         }
@@ -46,8 +48,11 @@ function cuadro1() {
     if (primeraFIla(matriz)) {
         alert("ganaste")
     }
-
     if (Diagonal(matriz)) {
+        alert("ganaste")
+    }
+
+    if (Diagonal2(matriz)) {
         alert("ganaste")
     }
 
@@ -79,8 +84,11 @@ function cuadro2() {
     if (primeraFIla(matriz)) {
         alert("ganaste")
     }
-
     if (Diagonal(matriz)) {
+        alert("ganaste")
+    }
+
+    if (Diagonal2(matriz)) {
         alert("ganaste")
     }
  
@@ -102,7 +110,6 @@ function cuadro3() {
         } else {
             cuad3.innerHTML = 'O'
             gato = true;
-            
             mensaje.innerText = "Tu turno"
             matriz[0][2] = "O"
             console.log(matriz);
@@ -114,8 +121,11 @@ function cuadro3() {
     if (primeraFIla(matriz)) {
         alert("ganaste")
     }
-
     if (Diagonal(matriz)) {
+        alert("ganaste")
+    }
+
+    if (Diagonal2(matriz)) {
         alert("ganaste")
     }
 }
@@ -148,8 +158,11 @@ function cuadro4() {
     if (segundaFIla(matriz)) {
         alert("ganaste")
     }
-
     if (Diagonal(matriz)) {
+        alert("ganaste")
+    }
+
+    if (Diagonal2(matriz)) {
         alert("ganaste")
     }
 }
@@ -181,8 +194,11 @@ function cuadro5() {
     if (segundaFIla(matriz)) {
         alert("ganaste")
     }
-
     if (Diagonal(matriz)) {
+        alert("ganaste")
+    }
+
+    if (Diagonal2(matriz)) {
         alert("ganaste")
     }
 }
@@ -213,8 +229,11 @@ function cuadro6() {
     if (segundaFIla(matriz)) {
         alert("ganaste")
     }
-
     if (Diagonal(matriz)) {
+        alert("ganaste")
+    }
+
+    if (Diagonal2(matriz)) {
         alert("ganaste")
     }
 }
@@ -244,8 +263,7 @@ function cuadro7() {
     if (Diagonal(matriz)) {
         alert("ganaste")
     }
-
-    if (Diagonal(matriz)) {
+    if (Diagonal2(matriz)) {
         alert("ganaste")
     }
    
@@ -273,6 +291,9 @@ function cuadro8() {
         swal("ESTE ESPACIO YA ESTA OCUPADO");
     }
     if (Diagonal(matriz)) {
+        alert("ganaste")
+    }
+    if (Diagonal2(matriz)) {
         alert("ganaste")
     }
     
@@ -304,10 +325,14 @@ function cuadro9() {
     if (Diagonal(matriz)) {
         alert("ganaste")
     }
+    if (Diagonal2(matriz)) {
+        alert("ganaste")
+    }
+   
    
 }
 
-
+/*-----------------------------------------------------------------------------------------------------------------------*/
 function primeraFIla(matriz) {
     let contaX = 0;
     let contaO = 0;
@@ -325,7 +350,7 @@ function primeraFIla(matriz) {
     }
 }
 
-
+/*-----------------------------------------------------------------------------------------------------------------------*/
 function segundaFIla(matriz) {
     let contaX = 0;
     let contaO = 0;
@@ -343,19 +368,35 @@ function segundaFIla(matriz) {
     }
 }
 
-
+/*-----------------------------------------------------------------------------------------------------------------------*/
 
 function Diagonal(matriz) {
     let contaX = 0;
     let contaO = 0;
-
     for (let index = 0; index < matriz.length; index++) {
-        if (matriz[0.0] && matriz[1.1] && matriz[2.2] == "x") {
+        if (matriz[0][0] == "X" && matriz[1][1]== "X" && matriz[2][2] == "X") {
             contaX++;
-        }else if(matriz[0,0][1,1][2,2] == "O"){
+        }else if(matriz[0][0]  == "O"  && matriz[1][1] == "O"  && matriz[2][2] == "O" ){
             contaO++;
         }
-    }if (contaX == 1 || contaO == 1) {
+    }if (contaX == 3 || contaO == 3) {
+        return true
+    }else{
+        return false
+    }
+}
+/*-----------------------------------------------------------------------------------------------------------------------*/
+
+function Diagonal2(matriz) {
+    let contaX = 0;
+    let contaO = 0;
+    for (let index = 0; index < matriz.length; index++) {
+        if (matriz[0][2] == "X" && matriz[1][1]== "X" && matriz[2][0] == "X") {
+            contaX++;
+        }else if(matriz[0][2] == "O" && matriz[1][1]== "O" && matriz[2][0] == "O"  ){
+            contaO++;
+        }
+    }if (contaX == 3 || contaO == 3) {
         return true
     }else{
         return false
