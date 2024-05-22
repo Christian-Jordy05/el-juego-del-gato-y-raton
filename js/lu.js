@@ -17,10 +17,11 @@ let matriz = [
     ["", "", ""],
     ["", "", ""]
 ];
+console.log(matriz);
+let cuadros1 = [cuad1,cuad2,cuad3,cuad4,cuad5,cuad6,cuad7,cuad8,cuad9]
 
-let cuadro = [cuad1,cuad2,cuad3,cuad4,cuad5,cuad6,cuad7,cuad8,cuad9]
 
-console.log(cuadro)
+console.log(cuadros1)
 //  controla los turnos del jugadores (X o O)
 
 let gato = true; // Indica si es el turno del jugador X
@@ -46,7 +47,7 @@ function turnos() {
         // reiniciarJuego(); 
     }
 }
-function actualizarCuadro(cuadro,goku,cr7) {
+function actualizarCuadro(cuadro,goku,cr7,) {
     // aqui verifica que si el codigo es valido y el cuadro esta vacio
     if (turno) {
         if (matriz[goku][cr7] === "") {
@@ -58,19 +59,22 @@ function actualizarCuadro(cuadro,goku,cr7) {
                 matriz[goku][cr7] = 'X'; // muetra una X en la matriz
                 mensaje.innerText = "turno del Bot"; // muestra el mensaje para el turno de la IA
                 gato = false; // y si fue turno de X que va hacer true entonces true lo convierte false para que la seguiente sea O
+                setTimeout(() => {
+                    botMessi(matriz)
+                }, 100);
 
+               
                 
-                let valorAle= Math.floor(Math.random()*8)
-                document.getElementById("cuadro"+valorAle).innerHTML="O"
             } else {
+                // // Si es el turno de O
+                setTimeout(() => {
+                let valorAle= Math.floor(Math.random()*8)
+                document.getElementById("cuadro"+ valorAle).innerHTML = "O"
+                // cuadro.innerHTML = 'O'; // aqui es lo mismo con la X que lo muestra en el cuadro de la pag
+           
+                }, 200);
                 
-                // Si es el turno de O
-                cuadro.innerHTML = 'O'; // aqui es lo mismo con la X que lo muestra en el cuadro de la pag
-                matriz[goku][cr7] = 'O'; // muestra la O en la matriz 
-                mensaje.innerText = "Tu turno"; // muestra el mensaje para el turno del jugador
-                gato = true; // aqui es lo mismo que arriba solo que solo que false ahora se convierte en true para que sea el turno de X
             }
-             
            turno = !turno;  
            turno = true; turnos()
            
@@ -78,6 +82,21 @@ function actualizarCuadro(cuadro,goku,cr7) {
         } else {
             // Si el cuadro ya está ocupado
             swal("ESTE ESPACIO YA ESTA OCUPADO"); 
+        }
+    }function botMessi(matriz) {
+        let botMessi = "";
+        for (let index = 0; index < matriz.length; index++) {
+           for (let j = 0; j < matriz[i].length; j++) {
+            if (matriz[i][j] === "") { 
+                vacio.push({i,j})
+            }
+           }
+        }if (vacio.length > 0) {
+            let elegido = vacios[Math.floor(Math.random()*vacios.length)];
+            let cuadroBot = document.getElementById(`cuadro${elegido.i *3 + elegido.j}`)
+            matriz[goku][cr7] = 'O'; // muestra la O en la matriz 
+            mensaje.innerText = "Tu turno"; // muestra el mensaje para el turno del jugador
+            gato = true; // aqui es lo mismo que arriba solo que solo que false ahora se convierte en true para que sea el turno de X
         }
     }
 }
