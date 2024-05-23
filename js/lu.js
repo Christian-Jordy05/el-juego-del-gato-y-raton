@@ -1,5 +1,3 @@
-
-
 let cuad1 = document.getElementById("cuadro0");
 let cuad2 = document.getElementById("cuadro1");
 let cuad3 = document.getElementById("cuadro2");
@@ -11,99 +9,106 @@ let cuad8 = document.getElementById("cuadro7");
 let cuad9 = document.getElementById("cuadro8");
 let mensaje = document.getElementById("mensaje");
 
-// la matriz donde se van colocando las X y O de los jugadores
+// La matriz donde se van colocando las X y O de los jugadores
 let matriz = [
     ["", "", ""],
     ["", "", ""],
     ["", "", ""]
 ];
 console.log(matriz);
-let cuadros1 = [cuad1,cuad2,cuad3,cuad4,cuad5,cuad6,cuad7,cuad8,cuad9]
 
+let cuadros1 = [cuad1, cuad2, cuad3, cuad4, cuad5, cuad6, cuad7, cuad8, cuad9];
+console.log(cuadros1);
 
-console.log(cuadros1)
-//  controla los turnos del jugadores (X o O)
-
+// Controla los turnos del jugadores (X o O)
 let gato = true; // Indica si es el turno del jugador X
-let turno = true; // verifica si el turno es correcto
+let turno = true; // Verifica si el turno es correcto
 
-// la funcion para actualizar el estado del juego y verificar si hay un ganador o empate borrar
-//esta funcion verifica si hay un empate o ganador
+// La función para actualizar el estado del juego y verificar si hay un ganador o empate
 function turnos() {
-    
-    if (primeraFila(matriz) || 
-        segundaFila(matriz) || 
-        terceraFila(matriz) ||
-        primeraColumna(matriz) || 
-        segundaColumna(matriz) || 
-        terceraColumna(matriz) ||
-        diagonal(matriz) ||
-        diagonal2(matriz)) 
-         {
-        alert("ganaste");
-        // reiniciarJuego(); 
+    let gan1 = gana()
+    if (gan1) {
+        if (gan1 === "X") {
+            alert("ganaste")
+            setTimeout(() => {
+                location.reload()
+            }, 300);
+        } if (gan1 === "O") {
+            alert("perdiste")
+        }
     } else if (empate(matriz)) {
-        alert("empate"); 
-        // reiniciarJuego(); 
+        alert("Empate");
+        // reiniciarJuego();
+        // location.reload()
     }
+
+
+  
+    function gana() {
+        for (let i = 0; i < 3; i++) {
+            //fila
+            if (matriz[i][0] === matriz[i][1] && matriz[i][1] === matriz[i][2] && matriz[i][0] !== "") {
+                return matriz[i][0];
+
+                //columnas
+            } if (matriz[0][i] === matriz[1][i] && matriz[1][i] === matriz[2][i] && matriz[0][i] !== "") {
+                return matriz[0][i];
+
+                //diagonal1
+            } if (matriz[0][0] === matriz[1][1] && matriz[1][1] === matriz[2][2] && matriz[0][0] !== "") {
+                return matriz[0][0];
+
+                //diagonal2
+            } if (matriz[0][2] === matriz[1][1] && matriz[1][1] === matriz[2][0] && matriz[0][2] !=="") {
+                return matriz[0][2];
+            }
+
+        }return null
+    } 
 }
-function actualizarCuadro(cuadro,goku,cr7,) {
-    // aqui verifica que si el codigo es valido y el cuadro esta vacio
-    if (turno) {
-        if (matriz[goku][cr7] === "") {
-            // Si es el turno de X
-            if (gato) {
-                cuadro.innerHTML = 'X';
 
-                 // muestra una X en el cuadro
-                matriz[goku][cr7] = 'X'; // muetra una X en la matriz
-                mensaje.innerText = "turno del Bot"; // muestra el mensaje para el turno de la IA
-                gato = false; // y si fue turno de X que va hacer true entonces true lo convierte false para que la seguiente sea O
-                setTimeout(() => {
-                    botMessi(matriz)
-                }, 100);
 
-               
-                
-            } else {
-                // // Si es el turno de O
-                setTimeout(() => {
-                let valorAle= Math.floor(Math.random()*8)
-                document.getElementById("cuadro"+ valorAle).innerHTML = "O"
-                // cuadro.innerHTML = 'O'; // aqui es lo mismo con la X que lo muestra en el cuadro de la pag
-           
-                }, 200);
-                
-            }
-           turno = !turno;  
-           turno = true; turnos()
-           
-            
-        } else {
-            // Si el cuadro ya está ocupado
-            swal("ESTE ESPACIO YA ESTA OCUPADO"); 
+function actualizarCuadro(cuadro, goku, cr7) {
+    if (turno && matriz[goku][cr7] === "") {
+        if (gato) {
+            cuadro.innerHTML = 'X';
+            matriz[goku][cr7] = 'X';
+            mensaje.innerText = "Turno del Bot";
+            gato = false;
+            turno = false;
+            turnos();
+            setTimeout(() => MessiBot(), 200);
         }
-    }function botMessi(matriz) {
-        let botMessi = "";
-        for (let index = 0; index < matriz.length; index++) {
-           for (let j = 0; j < matriz[i].length; j++) {
-            if (matriz[i][j] === "") { 
-                vacio.push({i,j})
-            }
-           }
-        }if (vacio.length > 0) {
-            let elegido = vacios[Math.floor(Math.random()*vacios.length)];
-            let cuadroBot = document.getElementById(`cuadro${elegido.i *3 + elegido.j}`)
-            matriz[goku][cr7] = 'O'; // muestra la O en la matriz 
-            mensaje.innerText = "Tu turno"; // muestra el mensaje para el turno del jugador
-            gato = true; // aqui es lo mismo que arriba solo que solo que false ahora se convierte en true para que sea el turno de X
-        }
+    } else {
+        swal("¡Este espacio ya está ocupado!");
     }
 }
 
-//este es para actulizar los funcion de los cuadros 
-/*mejor explicacion: que cuando un jugador hace click en un cuadro la funcion va a la funcion de "actualizarCuadro" al a cual se le indica las coordenadas y actualiza
-el cuadro y tambien junto con el cuadro tambien actuliza la matrix donde el jugador marco*/
+function MessiBot() { /*aqui esta la funcion del bot*/
+    let MessiBot = []; /* este array va aguardar las coordenadas de los cuadros vacios*/
+    for (let i = 0; i < matriz.length; i++) { /*aqui va comparando uno por uno para ver los cuadros vacios*/
+        for (let j = 0; j < matriz[i].length; j++) {
+            if (matriz[i][j] === "") {
+                MessiBot.push({ i, j });
+            }
+        }
+    }
+    /* y aqui cuando encutre cuadros vacios pone uno al azar*/
+    if (MessiBot.length > 0) {
+        let cuadroAle = MessiBot[Math.floor(Math.random() * MessiBot.length)];
+        /*aqui llamo los cuadros de html y obtiene una referencia a esos cuadros "i" fila  
+        y "j" es columnas y el *3 = 3x3 osea 3 columnas y 3filas*/
+        let cuadroBot = document.getElementById(`cuadro${cuadroAle.i * 3 + cuadroAle.j}`);
+        cuadroBot.innerHTML = 'O'; /*aqui pone el circulo que math.ramdom elegio*/
+        matriz[cuadroAle.i][cuadroAle.j] = 'O'; /* y aqui lo ingresa en la matriz para que no vuelva a ingresar en el mismo cuadro*/
+        mensaje.innerText = "Tu turno"; /*y este mensaje lo manda ya cuando el bot elegio el cuadro*/
+        //y aqui cambia el turno del jugador osea que del false va a cambiar a true
+        gato = true;
+        turno = true;
+        turnos(); /*y esta funcion va verificando si O gana o queda empate*/
+    }
+}
+// Este es para actualizar los eventos de los cuadros
 cuad1.onclick = () => actualizarCuadro(cuad1, 0, 0);
 cuad2.onclick = () => actualizarCuadro(cuad2, 0, 1);
 cuad3.onclick = () => actualizarCuadro(cuad3, 0, 2);
@@ -116,26 +121,20 @@ cuad9.onclick = () => actualizarCuadro(cuad9, 2, 2);
 
 // Función para reiniciar el juego
 function reiniciarJuego() {
-    // reinicia la matiz la matriz a su estado inicial vacío
     matriz = [
         ["", "", ""],
         ["", "", ""],
         ["", "", ""]
     ];
-    // Limpia todos los cuadros
-    let cuadros = [cuad1, cuad2, cuad3, cuad4, cuad5, cuad6, cuad7, cuad8, cuad9];
-    cuadros.forEach(cuadro => cuadro.innerHTML = "");
-    // Resetea las variables de turno y jugador
+    cuadros1.forEach(cuadro => cuadro.innerHTML = "");
     gato = true;
     turno = true;
-    // muestra quien comienza
     mensaje.innerText = "Tu turno";
 }
 
 // Funciones para verificar las condiciones de victoria
 function primeraFila(matriz) {
     return matriz[0].every(fila1 => fila1 === 'X') || matriz[0].every(fila1 => fila1 === 'O');
-    //aqui comparo con every que si la funciones cumplen las condiciones de la fila1 y a si mismo pasa con la 2,3 que estan abajo
 }
 
 function segundaFila(matriz) {
@@ -160,15 +159,15 @@ function terceraColumna(matriz) {
 
 function diagonal(matriz) {
     return (matriz[0][0] === 'X' && matriz[1][1] === 'X' && matriz[2][2] === 'X') ||
-           (matriz[0][0] === 'O' && matriz[1][1] === 'O' && matriz[2][2] === 'O');
+        (matriz[0][0] === 'O' && matriz[1][1] === 'O' && matriz[2][2] === 'O');
 }
 
 function diagonal2(matriz) {
     return (matriz[0][2] === 'X' && matriz[1][1] === 'X' && matriz[2][0] === 'X') ||
-           (matriz[0][2] === 'O' && matriz[1][1] === 'O' && matriz[2][0] === 'O');
+        (matriz[0][2] === 'O' && matriz[1][1] === 'O' && matriz[2][0] === 'O');
 }
 
-// va verificando que si todos los espacios de la matriz estan ocupado con X y O 
+// Va verificando que si todos los espacios de la matriz están ocupados con X y O 
 function empate(matriz) {
     return matriz.flat().every(comparacion => comparacion === 'X' || comparacion === 'O');
 }
