@@ -18,7 +18,7 @@ let matriz = [
 console.log(matriz);
 
 let cuadros1 = [cuad1, cuad2, cuad3, cuad4, cuad5, cuad6, cuad7, cuad8, cuad9];
-console.log(cuadros1);
+
 
 // Controla los turnos del jugadores (X o O)
 let gato = true; // Indica si es el turno del jugador X
@@ -26,46 +26,54 @@ let turno = true; // Verifica si el turno es correcto
 
 // La función para actualizar el estado del juego y verificar si hay un ganador o empate
 function turnos() {
+    
     let gan1 = gana()
     if (gan1) {
+// gane del usuario 
         if (gan1 === "X") {
-            alert("ganaste")
+            swal("ganaste", "", "success");
             setTimeout(() => {
                 location.reload()
-            }, 300);
+            }, 2000);
+// gane del bot
         } if (gan1 === "O") {
-            alert("perdiste")
+            swal ( "Oops...perdiste","","error" )
+            setTimeout(() => {
+                location.reload()
+            }, 2000);
         }
+// si nadie gana quedan en empate
     } else if (empate(matriz)) {
         alert("Empate");
-        // reiniciarJuego();
-        // location.reload()
+        setTimeout(() => {
+            location.reload()
+        }, 300);
+        
     }
 
-
-  
-    function gana() {
-        for (let i = 0; i < 3; i++) {
-            //fila
-            if (matriz[i][0] === matriz[i][1] && matriz[i][1] === matriz[i][2] && matriz[i][0] !== "") {
-                return matriz[i][0];
-
-                //columnas
-            } if (matriz[0][i] === matriz[1][i] && matriz[1][i] === matriz[2][i] && matriz[0][i] !== "") {
-                return matriz[0][i];
-
-                //diagonal1
-            } if (matriz[0][0] === matriz[1][1] && matriz[1][1] === matriz[2][2] && matriz[0][0] !== "") {
-                return matriz[0][0];
-
-                //diagonal2
-            } if (matriz[0][2] === matriz[1][1] && matriz[1][1] === matriz[2][0] && matriz[0][2] !=="") {
-                return matriz[0][2];
-            }
-
-        }return null
-    } 
 }
+
+      // en esta funcion  uso un for para que vaya revisando cada cuadro y que tenga 3 cosas iguales 
+function gana() {
+    for (let i = 0; i < 3; i++) {
+        
+        //fila
+        if (matriz[i][0] === matriz[i][1] && matriz[i][1] === matriz[i][2] && matriz[i][0] !== "") {
+            return matriz[i][0];
+
+            //columnas
+        } if (matriz[0][i] === matriz[1][i] && matriz[1][i] === matriz[2][i] && matriz[0][i] !== "") {
+            return matriz[0][i];
+
+            //diagonal1
+        } if (matriz[0][0] === matriz[1][1] && matriz[1][1] === matriz[2][2] && matriz[0][0] !== "") {
+            return matriz[0][0];
+
+            //diagonal2
+        } if (matriz[0][2] === matriz[1][1] && matriz[1][1] === matriz[2][0] && matriz[0][2] !=="") {
+            return matriz[0][2];
+        }}}
+
 
 
 function actualizarCuadro(cuadro, goku, cr7) {
@@ -74,10 +82,8 @@ function actualizarCuadro(cuadro, goku, cr7) {
             cuadro.innerHTML = 'X';
             matriz[goku][cr7] = 'X';
             mensaje.innerText = "Turno del Bot";
-            gato = false;
-            turno = false;
             turnos();
-            setTimeout(() => MessiBot(), 200);
+            setTimeout(() => MessiBot(), 600);
         }
     } else {
         swal("¡Este espacio ya está ocupado!");
@@ -108,7 +114,7 @@ function MessiBot() { /*aqui esta la funcion del bot*/
         turnos(); /*y esta funcion va verificando si O gana o queda empate*/
     }
 }
-// Este es para actualizar los eventos de los cuadros
+// Este es para actualizar los cuadros y matriz 
 cuad1.onclick = () => actualizarCuadro(cuad1, 0, 0);
 cuad2.onclick = () => actualizarCuadro(cuad2, 0, 1);
 cuad3.onclick = () => actualizarCuadro(cuad3, 0, 2);
@@ -119,18 +125,10 @@ cuad7.onclick = () => actualizarCuadro(cuad7, 2, 0);
 cuad8.onclick = () => actualizarCuadro(cuad8, 2, 1);
 cuad9.onclick = () => actualizarCuadro(cuad9, 2, 2);
 
-// Función para reiniciar el juego
-function reiniciarJuego() {
-    matriz = [
-        ["", "", ""],
-        ["", "", ""],
-        ["", "", ""]
-    ];
-    cuadros1.forEach(cuadro => cuadro.innerHTML = "");
-    gato = true;
-    turno = true;
-    mensaje.innerText = "Tu turno";
-}
+
+document.getElementById("btn").addEventListener("click",function () {
+    location.reload()
+})
 
 // Funciones para verificar las condiciones de victoria
 function primeraFila(matriz) {
@@ -167,7 +165,7 @@ function diagonal2(matriz) {
         (matriz[0][2] === 'O' && matriz[1][1] === 'O' && matriz[2][0] === 'O');
 }
 
-// Va verificando que si todos los espacios de la matriz están ocupados con X y O 
+// verificando que si todos los espacios de la matriz están ocupados con X y O 
 function empate(matriz) {
     return matriz.flat().every(comparacion => comparacion === 'X' || comparacion === 'O');
 }

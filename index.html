@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/el-juego-del-gato-y-raton/css/style.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
-<body>
+
+<body style="background-color: black;">
 
     <div class="conteinerDeGato">
+    
+
+
         <div onclick=cuadro1() id="cuadro0" class="cuadro4"></div>
         <div onclick=cuadro2() id="cuadro1" class="cuadro5"></div>
         <div onclick=cuadro3() id="cuadro2" class="cuadro4"></div>
@@ -20,10 +27,12 @@
         <div onclick=cuadro8() id="cuadro7" class="cuadro8"></div>
         <div onclick=cuadro9() id="cuadro8" class="cuadro"></div>
 
-        <div id="mensaje">TU TURNO</div>
+        <div id="mensaje">comienza</div>
+        <button id="btn">reiniciar juego</button>
         <br>
-        
+
     </div>
     <script src="js/lu.js"></script>
 </body>
+
 </html>
